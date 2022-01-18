@@ -50,7 +50,7 @@ const handeResults = (results, url, count, formFactor) => {
     else {
       console.log();
       console.group(`Lighthouse Test for \x1b[30m\x1b[47m${url}\x1b[0m`);
-      console.info(`Test was ran \x1b[30m\x1b[47m${count}\x1b[0m times`);
+      console.info(`Test ran \x1b[30m\x1b[47m${count}\x1b[0m times`);
       if (formFactor) console.info(`Ran on ${formFactor}`);
       console.info(`Results: ${formatResult(results)}`);
       console.info(`Average: ${color}${avg}\x1b[0m`);
@@ -66,7 +66,7 @@ const lighthouseSuite = async (args, url) => {
 
     for (let i = 0; i < count; i++) {
       const result = await runLighthouseTest(urlWithQuery, formFactor)
-      console.log(`run ${i + 1} ${getScoreColor(result)}${result}\x1b[0m`);
+      console.log(`run ${i + 1}: ${getScoreColor(result)}${result}\x1b[0m`);
       results.push(result);
     }
 
@@ -87,10 +87,3 @@ vorpal
   .action(async function (args) {
     await lighthouseSuite(args, 'http://www.you.com');
 });
-
-vorpal
-  .command('c', 'Exits litehaus')
-  .action(function () {
-    this.log('Exiting Litehaus');
-    vorpal.ui.cancel();
-  });
