@@ -42,7 +42,7 @@ const runLighthouseTest = async (url, formFactor) => {
   }
 }
 
-const handeResults = (results, url, count) => {
+const handeResults = (results, url, count, formFactor) => {
     const avg = calcAverage(results);
     const color = getScoreColor(avg);
 
@@ -51,6 +51,7 @@ const handeResults = (results, url, count) => {
       console.log();
       console.group(`Lighthouse Test for \x1b[30m\x1b[47m${url}\x1b[0m`);
       console.info(`Test was ran \x1b[30m\x1b[47m${count}\x1b[0m times`);
+      if (formFactor) console.info(`Ran on ${formFactor}`);
       console.info(`Results: ${formatResult(results)}`);
       console.info(`Average: ${color}${avg}\x1b[0m`);
       console.groupEnd();
@@ -65,11 +66,11 @@ const lighthouseSuite = async (args, url) => {
 
     for (let i = 0; i < count; i++) {
       const result = await runLighthouseTest(urlWithQuery, formFactor)
-      console.log(`test \x1b[30m\x1b[47m${i + 1}\x1b[0m: ${getScoreColor(result)}${result}\x1b[0m`);
+      console.log(`run ${i + 1} ${getScoreColor(result)}${result}\x1b[0m`);
       results.push(result);
     }
 
-    handeResults(results, urlWithQuery, count);
+    handeResults(results, urlWithQuery, count, formFactor);
 }
 
 // Program
